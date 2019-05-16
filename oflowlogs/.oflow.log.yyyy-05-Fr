@@ -1,0 +1,2 @@
+2019-05-03T08:58:00.142Z - info: {"query":"SELECT PlantID, PlantName FROM RefPlant;","input":{}}
+2019-05-03T08:58:50.336Z - info: {"query":"SELECT PlantID, PlantName, SiteName FROM RefPlant WHERE PlantID = :plantId;","input":{"plantId":"1"}}

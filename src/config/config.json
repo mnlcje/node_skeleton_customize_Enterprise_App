@@ -1,0 +1,33 @@
+{
+    "Config":{
+    "User": {
+        "DOB" : "01/02/2019",
+        "Name" : "Mainak",    
+        "Role" : "Angular"
+        },
+        "Port": 3000,
+        "DBConnections":{
+            "default": {
+                "user": "oflowqasuser",
+                "password": "oflow!123",
+                "server": "oflow-qas-cluster.cluster-cqck4vhyk8sr.us-east-1.rds.amazonaws.com",
+                "database": "oFlow_QAS",
+                "requestTimeout": 300000,
+                "dbType": "mysql",
+                "port": 3306,
+                "maxConcurrent": 100,
+                "dialectOptions": {
+                  "ssl": "Amazon RDS",
+                  "multipleStatements": true
+                }
+              }
+        },
+        "SAP": {
+            "userId": "OFLOWSYS",
+            "password": "sapiff123",
+            "contentType": "application/json",
+            "accept": "application/json",
+            "url": "http://sapqo1.iff.com:50000/dir/wsdl?"
+          }
+    }
+}
