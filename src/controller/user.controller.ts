@@ -1,5 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { UserServiceManager } from "../data-manager/userservice.manager";
+import { cacheMiddleware } from './../utils/cache-middleware';
+
 import {Api} from '../helpers/api';
 import { IComments } from '../entities';
 import{SapManager} from '../data-manager/sap.manager'
@@ -13,7 +15,7 @@ export class UserController
     constructor()
     {
         this.router.get('/',this.getUserHardCoded);
-        this.router.get('/fromDB',this.getUserFromDB);
+        this.router.get('/fromDB', cacheMiddleware(10), this.getUserFromDB);
         this.router.get('/fromConfig',this.getUserFromConfig);
         this.router.get('/searchUserById/:id',this.getUserById);
         this.router.get('/masterdata/:plantid/:materialno', this.getMasterData);        
