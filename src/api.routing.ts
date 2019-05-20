@@ -4,7 +4,7 @@ import { MaterialController } from './controller/material.controller';
 
 export class ApiRouting{
 
-    public static configureRouters(app: express.Router){
+    public  static configureRouters(app: express.Router){
         
         app.use(UserController.route,new UserController().router);
         app.use(MaterialController.route,new MaterialController().router);
