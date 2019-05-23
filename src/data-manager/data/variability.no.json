@@ -1,20 +1,230 @@
 {
-    "variabilityNo":
+    "data":
     [
         {
-            "IPC": "A001",
-             "MRP": "RS",
-            "LT":"8"
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
         },
         {
-            "IPC": "A002",
-             "MRP": "MS",
-             "LT":"9"
+            "PlantID": "0012",
+             "MaterialNo": "Q0700919",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
         },
         {
-            "IPC": "A003",
-             "MRP": "MM",
-             "LT":"19"
+            "PlantID": "0012",
+            "MaterialNo": "Q0700920",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2015",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0013",
+            "MaterialNo": "Q0700978",
+            "MRPController":"F78",
+            "NextPOPRProactiveDate":"01/12/2016",
+            "LeadTime":"8"            
+        },
+        {
+            "PlantID": "0014",
+            "MaterialNo": "Q0760917",
+            "MRPController":"F12",
+            "NextPOPRProactiveDate":"01/12/2015",
+            "LeadTime":"8"            
+        },
+        {
+            "PlantID": "0012",
+            "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+            "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"71"            
+        },
+        {
+            "PlantID": "0012",
+            "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"70"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"70"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F19",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"27"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F19",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
+        },
+        {
+            "PlantID": "0012",
+             "MaterialNo": "Q0700917",
+            "MRPController":"F14",
+            "NextPOPRProactiveDate":"01/12/2017",
+            "LeadTime":"7"            
         }
+                
     ]
 }
