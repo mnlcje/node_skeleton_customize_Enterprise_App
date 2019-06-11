@@ -9,5 +9,10 @@ export class MaterialServiceManager
         let data = fs.readFileSync(filePath);
         return JSON.parse(data);
     }
+
+    public getTechnology(PlantID, MaterialNo)
+    {
+        return "RM";
+    }
 }
     

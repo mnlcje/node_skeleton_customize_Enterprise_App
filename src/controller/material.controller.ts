@@ -9,7 +9,7 @@ export class MaterialController
     
     
     constructor(){
-        this.router.get('/',this.getVariabilityNo);
+        this.router.get('/technology/:plantid/:materialno',this.getTechnology)
         this.router.get('/variabilityno',this.getVariabilityNo);
         this.router.get('/realdemand', this.getRealDemand); 
         }
@@ -24,4 +24,23 @@ export class MaterialController
     {
         
     }
+
+    public getTechnology(req: Request, res: Response, next: NextFunction)
+    {
+        const plantId = req.params['plantid'];
+        const materialNo = req.params['materialno'];
+
+        //Below code is for the response that returns a promise
+       /* new MaterialServiceManager().getTechnology(plantId,materialNo).then((result)=>{
+            return Api.ok(req,res,result);
+        },(error)=>{
+
+            next(error);
+        });
+        */
+
+        let result =  new MaterialServiceManager().getTechnology(plantId,materialNo);
+        return Api.ok(req,res,result);   
+    }
+
 }
