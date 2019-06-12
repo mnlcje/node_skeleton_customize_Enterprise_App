@@ -9,7 +9,8 @@ export class MaterialController
     
     
     constructor(){
-        this.router.get('/technology/:plantid/:materialno',this.getTechnology)
+        this.router.get('/technology/:plantid/:materialno',this.getTechnology);
+        this.router.get('/masterdata/:plantid/:materialno',this.getMaterialMasterData);
         this.router.get('/variabilityno',this.getVariabilityNo);
         this.router.get('/realdemand', this.getRealDemand); 
         }
@@ -17,6 +18,12 @@ export class MaterialController
     public getVariabilityNo(req:Request,res:Response,next:NextFunction)
     {
         let result =  new MaterialServiceManager().getData('variability.no.json');
+        return Api.ok(req,res,result);
+    }
+
+    public getMaterialMasterData(req:Request,res:Response,next:NextFunction)
+    {
+        let result = new MaterialServiceManager().getData('material-masterData.json');
         return Api.ok(req,res,result);
     }
 
