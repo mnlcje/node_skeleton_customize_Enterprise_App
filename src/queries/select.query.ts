@@ -151,7 +151,49 @@ export const SelectQuery = {
                         AND rm.PlantID = rms.PlantID)
                     WHERE rm.PlantID = :PlantID
                     AND rm.MaterialNo = :MaterialNo;`,
-getRefMaterialValuation: `SELECT MaterialNo, ValuationArea, ValuationType, ValuationClass, AveragePrice, StandardPrice,PriceUnit, PriceControlFlag FROM RefMaterialValuation where ValuationArea = :PlantID and MaterialNo = :MaterialNo;`
+getRefMaterialValuation: `SELECT MaterialNo, ValuationArea, ValuationType, ValuationClass, AveragePrice, StandardPrice,PriceUnit, PriceControlFlag FROM RefMaterialValuation where ValuationArea = :PlantID and MaterialNo = :MaterialNo;`,
+getBatchTextGeneratorConfig: `SELECT Config.ConfigCode, Config.Type, Config.Params, Config.Parent
+                                from ConfigurationInfo as Config
+                                WHERE Config.ConfigCode = 'BATCH-TXT-DDL' AND Config.ActiveFlg = 'Y' AND ifnull(Config.Parent,'') = :filterParent;`,
+getBlockStockOverview: `SELECT PlantID,
+                        Case when PreAction IS NULL then 'TOTAL'
+                          when PreAction = 'Destroy' then 'PotProvision' else PreAction end AS ActionType,
+                        COUNT(DISTINCT MaterialNo) as MatCount,
+                        COUNT(DISTINCT BatchNo) as BatCount,
+                        Round(SUM(BlockedQuantity),2) as BlockedQty,
+                        SUM(BlockValue) as BlockedVal,
+                        Round(AVG(BlendPercentage),2) as AvgBlendRate,
+                        COUNT(DISTINCT Case when PreAction = 'ReturnToVendor' then BatchNo
+                          when PreAction NOT in ('Destroy','Des-POCO','InvDisc','Undecided') AND OneMonthUsage <> 0 then
+                          BatchNo end) as MonthOne,
+                        IFNULL(SUM(Case when PreAction = 'ReturnToVendor' then BlockValue
+                          when PreAction NOT in ('Destroy','Des-POCO','InvDisc','Undecided') AND OneMonthUsage <> 0 then
+                          OneMonthUsage * OneKGValue end),0) as MonthOneVal,
+                        COUNT(DISTINCT Case when PreAction NOT in ('Destroy','Des-POCO','InvDisc','Undecided','ReturnToVendor')
+                          AND OneQuarterUsage <> 0 then BatchNo end) as QtrOne,
+                        IFNULL(SUM(Case when PreAction NOT in ('Destroy','Des-POCO','InvDisc','Undecided','ReturnToVendor')
+                          AND OneQuarterUsage <> 0 then OneQuarterUsage * OneKGValue end),0) as QtrOneVal,
+                        COUNT(DISTINCT Case when PreAction NOT in ('Destroy','Des-POCO','InvDisc','Undecided','ReturnToVendor')
+                          AND HalfYearUsage <> 0 then BatchNo end) as HalfYear,
+                        IFNULL(SUM(Case when PreAction NOT in ('Destroy','Des-POCO','InvDisc','Undecided','ReturnToVendor')
+                          AND HalfYearUsage <> 0 then HalfYearUsage * OneKGValue end),0) as HalfYearVal,
+                        Count(DISTINCT Case when (PreAction NOT in ('Destroy','Des-POCO','InvDisc','Undecided')
+                          AND OneYearUsage <> 0) OR PreAction = 'ReturnToVendor' then BatchNo end) as YearOne,
+                        IFNULL(SUM(Case when PreAction = 'ReturnToVendor' then BlockValue
+                          when PreAction NOT in ('Destroy','Des-POCO','InvDisc','Undecided') AND OneYearUsage <> 0
+                          then OneYearUsage * OneKGValue end),0) as YearOneVal,
+                        COUNT(DISTINCT Case when PreAction in ('Destroy','Des-POCO','InvDisc','Undecided') OR
+                          (PreAction <> 'ReturnToVendor' AND OverYearUsage <> 0) then BatchNo end) as OverYearOne,
+                        IFNULL(SUM(Case when PreAction NOT in ('Destroy','Des-POCO','InvDisc','Undecided','ReturnToVendor')
+                          AND OverYearUsage <> 0 then OverYearUsage * OneKGValue when PreAction
+                          in ('Destroy','Des-POCO','InvDisc','Undecided')then BlockValue end),0) as OverYearOneVal
+                        from CMP_BlockStock
+                        where PlantID=:plantId
+                        Group by PreAction
+                        with rollup;`,
+  getBlockStockBatches: `SELECT * FROM CMP_BlockStock where PlantID=:plantId WhereBlock `
+}
+
   
   
 
