@@ -191,7 +191,90 @@ getBlockStockOverview: `SELECT PlantID,
                         where PlantID=:plantId
                         Group by PreAction
                         with rollup;`,
-  getBlockStockBatches: `SELECT * FROM CMP_BlockStock where PlantID=:plantId WhereBlock `
+  getBlockStockBatches: `SELECT * FROM CMP_BlockStock where PlantID=:plantId WhereBlock;`,
+    
+  getPlantEquipmentDescription:
+    `SELECT Plnt.PlantID, ProOrdInf.EquipmentType, ci.Params AS name FROM RefProcessOrderInfo AS ProOrdInf
+        INNER JOIN  ConfigurationInfo AS ci ON ProOrdInf.EquipmentType = ci.Type AND ci.ConfigCode = 'TECH-DESC'
+        INNER JOIN RefPlant AS Plnt ON ProOrdInf.PlantID = Plnt.PlantID
+          AND ProOrdInf.EquipmentType IS NOT NULL
+          AND Plnt.PlantType = 'M'
+        GROUP BY Plnt.PlantID,ProOrdInf.EquipmentType, ci.Params
+        ORDER BY ProOrdInf.EquipmentType;`,
+  getFGPOverviewTableData:
+    `SELECT ecr.IsPrimary, ec.RuleType, CONVERT(OVInfo.FinishDate, CHAR) as finDate, OVInfo.EquipmentType, OVInfo.TechnologyType, OVInfo.Demand, OVInfo.Confirmed,
+          OVInfo.PartiallyConfirmed, OVInfo.ToBeCompleted, OVInfo.ProjectedBackLog, OVInfo.AvailableCapacity, OVInfo.Released,
+          OVInfo.Created, OV.RescheduledMissingPart, OV.SubCreateMissingPart, OV.ReviewMissingPart, OV.MTBAMissingPart,
+          OV.MaterialAvailability, OV.MaterialAvailabilityCommitted, OV.MaterialAvailabilitySub, OV.MaterialAvailabilityRM,
+          OV.MaterialAvailabilityBlend, OV.MaterialAvailabilityNotChecked, OV.Phases, OV.RescheduledOrder, OV.ScheduledLine2Order
+        FROM FGP_OverviewItemInfo AS OVInfo
+        INNER JOIN FGP_OverviewInfo AS OV
+        ON OV.PlantID = OVInfo.PlantID
+          AND OV.EquipmentType = OVInfo.EquipmentType
+          AND OV.FinishDate = OVInfo.FinishDate
+          LEFT JOIN FGP_EquipmentConfiguration AS ec
+          ON OV.PlantID = ec.PlantId
+            AND OV.EquipmentType = ec.EquipmentType
+            AND OVInfo.TechnologyType = ec.Breakdown
+          LEFT JOIN FGP_EquipmentConfigurationRuleType AS ecr
+          ON ec.PlantID = ecr.PlantID
+            AND ec.RuleType = ecr.RuleType
+        WHERE OV.PlantID = :plantID
+          AND OVInfo.TechnologyType <> ''
+          AND OVInfo.EquipmentType = :equipmentType
+        GROUP BY OVInfo.FinishDate, OVInfo.EquipmentType, OVInfo.TechnologyType`,
+  getPRODetails:
+    `SELECT DISTINCT ('test') AS Comment, PO.ProcessOrderNo, PO.MaterialNo, PO.Description, PO.MRPController, VPO.EquipmentType,
+            VPO.Breakdown, PO.Status, PO.FinalStatus, PO.TargetQuantity, PO.CreatedAt, PO.BasicStartDate,
+            PO.BasicFinishDate, PO.ActualStartDate, PO.ActualReleaseDate, PO.ActualFinishDate, PO.PlannerGroup AS Ptype, PO.CharacteristicValue AS koshar,
+            MT.RMDelivDate, MT.MTBAStat, MT.MTBAStatTxt, DT.SaleOrderNo, DT.MaterialAvailDate, DT.frGIDate,
+            DT.delivGIDate, DT.GIDate, DT.SchLineNo, CMS.MSPTCount,
+            CASE
+              WHEN PO.FinalStatus IN ('DLFL') THEN 7
+              WHEN PO.FinalStatus IN ('CNF', 'DLV', 'TECO') THEN 6
+              WHEN PO.FinalStatus IN ('PCNF') THEN 1
+              WHEN PO.FinalStatus IN ('REL') THEN 2
+              WHEN PO.FinalStatus IN ('MSPT') THEN 3
+              WHEN PO.FinalStatus IN ('MACM') THEN 4
+              WHEN PO.FinalStatus IN ('MANC') THEN 5
+            END AS Class
+          FROM ACT_ProcessOrderInfo AS PO
+          INNER JOIN View_Processorderbreakdown AS VPO
+            ON VPO.ProcessOrderNo = PO.ProcessOrderNo
+            AND VPO.EquipmentType = :equipmentType
+            INNER JOIN FGP_OverviewItemInfo AS fpover
+            ON PO.PlantID = fpover.PlantID
+            AND fpover.EquipmentType = :equipmentType
+            AND PO.BasicFinishDate = fpover.FinishDate
+          LEFT JOIN (SELECT
+              CDS.PONumber,
+              SO.PlantID,
+              GROUP_CONCAT(CONCAT(SO.SalesOrderNo,'-',CDS.SalesOrderItemNo)) AS SaleOrderNo,
+              MIN(SO.MaterialAvailabilityDate) AS MaterialAvailDate,
+              MIN(SO.GoodsIssueDate) AS GIDate,
+              MAX(SO.ScheduleLineNo) AS SchLineNo,
+              MIN(SO.PlannedGoodsIssueDate2) AS frGIDate,
+              MIN(SO.GoodsIssueDate2) AS delivGIDate
+            FROM RefSalesOrderInfo AS SO
+              INNER JOIN CMT_DocumentStatus AS CDS
+                ON CDS.SalesOrderNo = SO.SalesOrderNo
+                AND CDS.SalesOrderItemNo = SO.SalesOrderItemNo
+            WHERE SO.PlantID = :plantId
+            AND SO.QuantityBaseUnit <> 0
+            GROUP BY CDS.PONumber) AS DT
+            ON PO.ProcessOrderNo = DT.PONumber
+          LEFT JOIN fn_OF_PPPOMTBA AS MT
+            ON PO.ProcessOrderNo = MT.ProcessOrderNo
+          LEFT JOIN (SELECT
+              ProcessOrderNo,
+              COUNT(MissingPart) AS MSPTCount
+            FROM ACT_ProcessOrderItem
+            WHERE MissingPart = 'X'
+            AND PlantID = :plantId
+            GROUP BY ProcessOrderNo) AS CMS
+            ON CMS.ProcessOrderNo = PO.ProcessOrderNo
+        WHERE PO.PlantID = :plantId '
+  
 }
 
   
