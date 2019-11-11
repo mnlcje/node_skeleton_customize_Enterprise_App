@@ -65,7 +65,7 @@
     "json-loader": "0.5.7",
     "jsonwebtoken": "8.0.1",
     "jwk-to-pem": "1.2.6",
-    "lodash": "4.17.10",
+    "lodash": "4.17.15",
     "memory-cache": "^0.2.0",
     "mocha": "3.2.0",
     "mocha-sonarqube-reporter": "^1.0.1",
