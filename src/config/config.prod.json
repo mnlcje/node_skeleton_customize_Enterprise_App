@@ -1,0 +1,73 @@
+{
+  "Config": {
+    "Port": 50600,
+    "SMTPHost": "smtp.global.iff.com",
+    "SiteUrl": "https://oflow2.iff.com/",
+    "FromMail": "oFlowServiceReporter@iff.com",
+    "DefaultToEmail": "narayanan.d@iff.com",
+    "DBConnections": {
+      "default": {
+        "user": "oflow_prod",
+        "password": "HX7(:_,sH9hYM/]J",
+        "server": "oflow-prod-cluster.cluster-cexch761gufg.us-east-1.rds.amazonaws.com",
+        "readServer": "oflow-prod-cluster.cluster-ro-cexch761gufg.us-east-1.rds.amazonaws.com",
+        "database": "oflow_Prod",
+        "requestTimeout": 300000,
+        "dbType": "mysql",
+        "port": 3306,
+        "maxConcurrent": 100,
+        "logging": false,
+        "dialectOptions": {
+          "ssl": "Amazon RDS",
+          "multipleStatements": true
+        }
+      }
+    },
+    "OktaConfig": {
+      "url": "http://iff.okta.com/oauth2"
+    },
+    "AppSettings": {
+      "defaultTotalRecords": 10,
+      "exclude": [
+        "/image",
+        "/info",
+        "/users",
+        "/swagger"
+      ]
+    },
+    "AppConfig": {
+      "name": "oFlow QAS API",
+      "version": "1.0.0",
+      "api": "/"
+    },
+    "MDR": {
+      "product": {
+        "url": "https://ion.iff.com/api/v1/products/"
+      },
+      "user": {
+        "url": "https://ion.iff.com/api/v1/users/"
+      }
+    },
+    "SAP": {
+      "userId": "OFLOWSYS",
+      "password": "sapiff123",
+      "contentType": "application/json",
+      "accept": "application/json",
+      "url": "http://sappo1.iff.com:50000/dir/wsdl?"
+    },
+    "WorkFlow": {
+      "url": "https://wf-api.iff.com/oflow-api/",
+      "requestUrl": {
+        "createRequest": "IffwfEngine/create/request",
+        "startWorkFlow": "IffwfEngine/start_workflow/:UserID/:RequestID",
+        "getRequestDetails": "IffwfEngine/getRequestDetails/:RequestID",
+        "getActionForProcess": "IffwfEngine/actions/:ProcessId",
+        "getStateDetails": "IffwfEngine/request/stateDetails/:ProcessId/:RequestID",
+        "getApprovalRequest": "IffwfEngine/request/approve/:processId/:userId",
+        "getAllUserRequest": "IffwfEngine/requests/:processId/:userId",
+        "getRequestByProcessId": "IffwfEngine/getRequestList/:processId/:projectId",
+        "stopWorkFlow": "IffwfEngine/disable_request/:requestId"
+      }
+    }
+  }
+}

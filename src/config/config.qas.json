@@ -1,0 +1,71 @@
+{
+  "Config": {
+    "Port": 50600,
+    "SMTPHost": "smtp.global.iff.com",
+    "SiteUrl": "https://oflow2-qas.iff.com/",
+    "FromMail": "oFlowServiceReporter@iff.com",
+    "DefaultToEmail": "narayanan.d@iff.com",
+    "DBConnections": {
+      "default": {
+        "user": "oflow_prod",
+        "password": "HX7(:_,sH9hYM/]J",
+        "server": "oflow-prod-cluster.cluster-cexch761gufg.us-east-1.rds.amazonaws.com",
+        "readServer": "oflow-prod-cluster.cluster-ro-cexch761gufg.us-east-1.rds.amazonaws.com",
+        "database": "oflow_Prod",
+        "requestTimeout": 300000,
+        "dbType": "mysql",
+        "port": 3306,
+        "maxConcurrent": 100,
+        "logging": false,
+        "dialectOptions": {
+          "ssl": "Amazon RDS",
+          "multipleStatements": true
+        }
+      }
+    },
+    "OktaConfig": {
+      "url": "http://iff.okta.com/oauth2"
+    },
+    "AppSettings": {
+      "defaultTotalRecords": 10,
+      "exclude": [
+        "/image",
+        "/info",
+        "/users",
+        "/swagger"
+      ]
+    },
+    "AppConfig": {
+      "name": "oFlow QAS API",
+      "version": "1.0.0",
+      "api": "/"
+    },
+    "MDR": {
+      "product": {
+        "url": "https://ion.iff.com/api/v1/products/"
+      },
+      "user": {
+        "url": "https://ion.iff.com/api/v1/users/"
+      }
+    },
+    "SAP": {
+      "userId": "jxp8037",
+      "password": "Oct@2019",
+      "contentType": "application/json",
+      "accept": "application/json",
+      "url": "http://sapqo1.iff.com:50000/dir/wsdl?",
+      "newUrl": "http://sapqgw.iff.com:8000/sap/opu/odata/SAP/ZOFLOW_SRV/"
+    },
+    "WorkFlow": {
+      "url": "https://wf-api-dev.iff.com/oflow-api/",
+      "requestUrl": {
+        "createRequest": "actions/create/request",
+        "approveTask": "actions/start_workflow/{0}",
+        "getStateDetails": "request/{0}/stateDetails",
+        "stopWorkFlow": "request/{0}/disable",
+        "getProcessDetails": "request/detailsByProcessId",
+        "cancelLastTask": "actions/revert_workflow/{0}/{1}"
+      }
+    }
+  }
+}
