@@ -1,37 +1,56 @@
-import {IConfig} from './IConfig';
-
+import { IConfig } from './IConfig';
+import { AppSetting } from './app.setting';
+import { Environment } from '.';
+import { dirname } from 'path';
+import { Logger } from '../helpers';
 const nconf = require('nconf');
+const path = require('path');
 
-export class ConfigManager{
-
+export class ConfigManager {
     public Config: IConfig;
+    constructor(pth?: string) {
+        let filename;
 
-    constructor(){        
-        let fileName = 'config.json';
-        nconf.use('memory');   
+        switch (AppSetting.Env) {
+            case Environment.DEV:
+                filename = 'config.dev.json';
+                break;
+            case Environment.QAS:
+                filename = 'config.qas.json';
+                break;
+            case Environment.PROD:
+                filename = 'config.prod.json';
+                break;
+            default:
+                filename = 'config.qas.json';
+        }
+        nconf.use('memory');
         if (!nconf.get('Config')) {
-            this.getFile(fileName);
-        }     
-        
+            this.getFile(filename);
+        }
         this.Config = nconf.get('Config');
-        
         if (!this.Config) {
-            console.log('Unable to read the config file');
+            Logger.error('Unable to read the config file');
+
             process.exit();
         }
-    }
 
-    public getFile(fileName)
-    {
-        //Key should match with JSON root element name
-        nconf.file('Config',{
-            file : 'config/' + fileName,
-            dir: __dirname,
-            search:true
-        });
-        
     }
-    public reset(){
+    public getFile(filename) {
+        nconf.file('Config', {
+            file: filename,
+            dir: './config/',
+            search: true
+        });
+        if (!nconf.get('Config')) {
+            nconf.file('Config', {
+                file: 'config/' + filename,
+                dir: __dirname,
+                search: true
+            });
+        }
+    }
+    public reset() {
         nconf.reset();
         nconf.clear();
     }
